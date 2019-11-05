@@ -43,7 +43,7 @@
                     <div class="form-group">
                       <label class="col-md-4 control-label" for="textinput">Cédula</label>  
                       <div class="col-md-4">
-                          <input name="cedula" id='cedula' type="text" placeholder="Cédula"  onchange="datos(this.value);" class="form-control input-md" required>
+                          <input name="cedula" id='cedula' type="text" placeholder="Cédula" onkeypress="return numbers(event)" onchange="datos(this.value);" class="form-control input-md" required>
                       </div>
                     </div>
                     <div class="form-group">
@@ -147,6 +147,22 @@
     <script src="https://nosir.github.io/cleave.js/dist/cleave.min.js"></script>
     <script src="assets/js/firebase.js"></script>
     <script>
+        function numbers(e){
+            key = e.keyCode || e.which;
+            tecla = String.fromCharCode(key).toLowerCase();
+            letras = " 0123456789";
+            especiales = [8,37,39,46];
+       
+            tecla_especial = false
+            for(var i in especiales){
+              if(key == especiales[i]){
+                  tecla_especial = true;
+                  break;
+              } 
+            }
+            if(letras.indexOf(tecla)==-1 && !tecla_especial)
+              return false;
+        }
         var config = {
             apiKey: "AIzaSyAYOuDY8ylH0RbQyTPOpyuQoNH3oEJpfk8",
             authDomain: "padron-79f32.firebaseapp.com",
@@ -191,6 +207,8 @@
                 }
             });
         }
+
+
 
         var cleave = new Cleave('#cedula', {
             prefix: '',

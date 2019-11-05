@@ -50,6 +50,7 @@
                     <li><a href='?pag=administrador/junta_directiva'>Junta Directiva</a><li>
                     <li><a href='?pag=administrador/noticias'>Noticias</a><li>
                     <li><a href='?pag=administrador/productos'>Productos de inventario</a><li>
+                    <li><a href='?pag=administrador/inventario_asada'>Inventario asada</a><li>
                  </ul>
              <li>
              ";
@@ -58,14 +59,13 @@
             $menu = "
             <li><a href='?pag=inicio'>Inicio</a></li>
             
-             <li><a href='?pag=master/tramites'>Formularios Generales</a> 
+            <li><a href='?pag=master/tramites'>Formularios Generales</a> 
                 <ul class='sub-nav'>
                     <li><a href='?pag=administrador/crear_tramite'>Crear Formularios</a><li>
                     <li><a href='?pag=administrador/tramites'>Ver Formularios</a><li>
-                 </ul>
-             <li>
-             
-            <li><a href='#'>Usuarios</a>
+                </ul>
+            <li>
+            <li><a href='?pag=master/usuarios&tipo=3'>Usuario</a>
                 <ul class='sub-nav'>
                     <li><a href='?pag=master/usuarios&tipo=3'>Máster</a></li>
                     <li><a href='?pag=master/usuarios&tipo=2'>Administradores</a></li>
