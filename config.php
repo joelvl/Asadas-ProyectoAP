@@ -1,9 +1,9 @@
 <?php 
 //%%%%%%%%%%%%%%% Configuracion de base de datos %%%%%%%%%%%%%%%
-$host = "asadastec.tk";
-$usuario = "admin_asadas";
-$contrasena = "asadas123*";
-$base = "admin_asadas";
+$host = "localhost:3308";
+$usuario = "root";
+$contrasena = "";
+$base = "acueductos";
 $link = new mysqli("$host", "$usuario", "$contrasena", "$base");
 //%%%%%%%%%%%%%%% Configuracion de cantidad de registros por pagina %%%%%%%%%%%%%%%
 $TAMANO_PAGINA = 10;
