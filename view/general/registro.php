@@ -1,10 +1,21 @@
 <div class="page-404 padding ptb-xs-40">
-    <div class="container">
-        <?php 
-
-
-                if(isset($_GET['nuevo'])){
-                    mysqli_query($link,"
+<div class="container">
+<?php 
+   if(isset($_GET['nuevo'])){
+       $mail = $_POST['email'] ;
+	   $username = $_POST['usuario'] ;
+	   $query = "SELECT usuario.usuario FROM `usuario` WHERE `usuario` = '$username' ";
+       $result = $link->query($query);
+	   if ($result->num_rows != 0)
+       { 	
+          echo "<script>alert('Ya existe un usuario con ese alias.');location.href='?pag=general/login';</script>";
+       }else{
+	       if($mail != ""){
+	          $mail = filter_var($_POST['email'], FILTER_VALIDATE_EMAIL);
+		      if($mail == ""){
+		         echo "<script>alert('Formato de email es inválido');location.href='?pag=general/login';</script>";
+		      }else{
+		         mysqli_query($link,"
                     INSERT INTO `persona`(
                     cedula,
                     email,
@@ -34,13 +45,17 @@
                         '".md5($_POST['password'])."'
                         '".$_POST['id_asada']."'
                     )");
-                    echo "<script>alert('Registro con éxito');location.href='?pag=general/login';</script>";
-                }
-        ?>
-                <center><h1>Registrarse </h1></center>
-                <form action="?pag=<?php echo $_GET['pag']; ?>&nuevo=1" method="POST" class="form-horizontal">
+                    echo "<script>alert('Registro con éxito');location.href='?pag=general/login';</script>";		
+			  }
+	       }			
+       }
+   }
+ ?>
+
+<center><h1>Registrarse </h1></center>
+<form action="?pag=<?php echo $_GET['pag']; ?>&nuevo=1" method="POST" class="form-horizontal">
                     
-                    <div class="form-group">
+					<div class="form-group">
                       <label class="col-md-4 control-label" for="textinput">Cédula</label>  
                       <div class="col-md-4">
                           <input name="cedula" id='cedula' type="text" placeholder="Cédula"  onchange="datos(this.value);" class="form-control input-md" required>
@@ -55,7 +70,7 @@
                     <div class="form-group">
                       <label class="col-md-4 control-label" for="textinput">Primer apellido</label>  
                       <div class="col-md-4">
-                          <input name="primerApellido" id="primerApellido" type="text" placeholder="Primer apellido" class="form-control input-md" required>
+                          <input name="primerApellido" id="primerApellido" type="text"  placeholder="Primer apellido" class="form-control input-md" required>
                       </div>
                     </div>
                     <div class="form-group">
@@ -64,6 +79,7 @@
                           <input name="segundoApellido" id="segundoApellido" type="text" placeholder="Segundo apellido" class="form-control input-md" required/>
                       </div>
                     </div>
+
                     <div class="form-group">
                       <label class="col-md-4 control-label" for="textinput">Email</label>  
                       <div class="col-md-4">
@@ -91,7 +107,7 @@
                     <div class="form-group">
                       <label class="col-md-4 control-label" for="textinput">Ubicación</label>  
                       <div class="col-md-4">
-                          <select  id="select-beast" name="id_distrito" required>
+                          <select  id="select-beast" name="id_distrito" >
                             <option value="" selected>Seleccionar</option>
                             <?php 
                               $sth = mysqli_query($link,"Call Get_Distritos()");
@@ -124,7 +140,7 @@
                     <div class="form-group">
                       <label class="col-md-4 control-label" for="textinput">Asada</label>  
                       <div class="col-md-4">
-                          <select  name="id_asada" class="form-control"  required>
+                          <select  name="id_asada" class="form-control"  >
                               <option value="" selected>Seleccionar</option>
                             <?php 
                               $sth = mysqli_query($link,"SELECT id_asada,nombre FROM `asada` ");
@@ -164,7 +180,7 @@
                 });
         }
         function datos(cedula) {
-            var refe = db.ref("app/datos/padron/" + cedula.replace("-", "").replace("-", ""));
+            var refe = db.ref("app/datos/padron/" + cedula.replace("-", ""));
             refe.on("value", function(snapshot) {
                 var snap = snapshot.val();
                 if (snap) {
@@ -192,16 +208,19 @@
             });
         }
 
-        var cleave = new Cleave('#cedula', {
+		var cleave = new Cleave('#cedula', {
             prefix: '',
             delimiter: '-',
-            blocks: [1, 4, 4],
-            uppercase: true
+            blocks: [1, 4, 4,3],
+            delimiterLazyShow: true,
+            numericOnly: true
         });
+
         var cleave2 = new Cleave('#telefono', {
             prefix: '',
             delimiter: '-',
             blocks: [4, 4],
-            uppercase: true
+            delimiterLazyShow: true,
+            numericOnly: true
         });
-             </script>
+</script>
